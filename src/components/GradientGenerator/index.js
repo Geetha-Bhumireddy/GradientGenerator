@@ -1,6 +1,6 @@
-import React, {Component} from 'react'
+import {Component} from 'react'
 import GradientDirectionItem from '../GradientDirectionItem'
-import {bgContainer} from './styledComponents'
+import {BgContainer} from './styledComponents'
 
 const gradientDirectionsList = [
   {directionId: 'TOP', value: 'top', displayText: 'Top'},
@@ -11,16 +11,14 @@ const gradientDirectionsList = [
 
 class GradientGenerator extends Component {
   state = {
-    directionId: gradientDirectionsList[0].directionId,
+    directionId: gradientDirectionsList[0].value,
     fromColor: '#8ae323',
     toColor: '#014f7b',
-    gradientValue: `to ${gradientDirectionsList[0].directionId}, #8ae323, #014f7b`,
+    gradientValue: `to ${gradientDirectionsList[0].value}, #8ae323, #014f7b`,
   }
 
   handleDirectionClick = directionId => {
-    const {fromColor, toColor} = this.state
-    const gradientValue = `to ${directionId}, ${fromColor}, ${toColor}`
-    this.setState({directionId, gradientValue})
+    this.setState({directionId})
   }
 
   handleColorChange = (colorType, event) => {
@@ -37,7 +35,10 @@ class GradientGenerator extends Component {
   renderGradient = () => {
     const {directionId, fromColor, toColor, gradientValue} = this.state
     return (
-      <bgContainer gradientValue={gradientValue}>
+      <BgContainer
+        gradientValue={gradientValue}
+        data-testid="gradientGenerator"
+      >
         <h1>Generate a CSS Color Gradient</h1>
         <p>Choose Direction</p>
         <ul>
@@ -46,11 +47,15 @@ class GradientGenerator extends Component {
               key={each.directionId}
               directionDetails={each}
               onClick={this.handleDirectionClick}
+              isActive={each.value === directionId}
             />
           ))}
         </ul>
         <div>
-          <label htmlFor="fromColor">From Color:</label>
+          <p>Pick the Colors</p>
+          <label htmlFor="fromColor">
+            <p>{fromColor}</p>
+          </label>
           <input
             type="color"
             id="fromColor"
@@ -59,7 +64,9 @@ class GradientGenerator extends Component {
           />
         </div>
         <div>
-          <label htmlFor="toColor">To Color:</label>
+          <label htmlFor="toColor">
+            <p>{toColor}</p>
+          </label>
           <input
             type="color"
             id="toColor"
@@ -67,8 +74,10 @@ class GradientGenerator extends Component {
             onChange={e => this.handleColorChange('toColor', e)}
           />
         </div>
-        <button onClick={this.handleGenerateButtonClick}>Generate</button>
-      </bgContainer>
+        <button type="button" onClick={this.handleGenerateButtonClick}>
+          Generate
+        </button>
+      </BgContainer>
     )
   }
 

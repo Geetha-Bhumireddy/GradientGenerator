@@ -1,14 +1,16 @@
 // Write your code here
-import React from 'react'
+import {DirectionButton} from './styledComponents'
 
-const GradientDirectionItem = ({directionDetails, onClick}) => {
+const GradientDirectionItem = ({directionDetails, onClick, isActive}) => {
   const handleClick = () => {
     onClick(directionDetails.directionId)
   }
 
   return (
     <li>
-      <button onClick={handleClick}>{directionDetails.displayText}</button>
+      <DirectionButton type="button" onClick={handleClick} isActive={isActive}>
+        {directionDetails.displayText}
+      </DirectionButton>
     </li>
   )
 }

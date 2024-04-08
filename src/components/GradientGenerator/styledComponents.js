@@ -1,5 +1,5 @@
 import styled from 'styled-components'
 
-export const bgContainer = styled.div`
-  background-color: linear-gradient(${props => props.gradientValue});
+export const BgContainer = styled.div`
+  background: linear-gradient(${props => props.gradientValue});
 `
